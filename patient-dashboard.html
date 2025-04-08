@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Dashboard - MediConnect</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places" defer></script>
+</head>
+<body class="dashboard-body">
+    <header class="dashboard-header">
+        <div class="logo">
+            <h1>MediConnect</h1>
+        </div>
+        <div class="user-menu">
+            <span id="user-name">John Doe</span>
+            <div class="user-avatar">
+                <img src="img/avatar-placeholder.jpg" alt="User Avatar">
+                <div class="user-dropdown">
+                    <a href="patient-profile.html"><i class="fas fa-user"></i> Profile</a>
+                    <a href="patient-settings.html"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+            <div class="notifications">
+                <i class="fas fa-bell"></i>
+                <span class="notification-count">3</span>
+                <div class="notification-dropdown">
+                    <div class="notification-item">
+                        <p>Appointment reminder: Dr. Smith tomorrow at 10:00 AM</p>
+                        <span class="notification-time">1 hour ago</span>
+                    </div>
+                    <div class="notification-item">
+                        <p>Your appointment with Dr. Johnson has been confirmed</p>
+                        <span class="notification-time">Yesterday</span>
+                    </div>
+                    <div class="notification-item">
+                        <p>New doctor available in your area: Dr. Williams</p>
+                        <span class="notification-time">2 days ago</span>
+                    </div>
+                    <a href="patient-notifications.html" class="view-all">View All Notifications</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active">
+                        <a href="patient-dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="patient-appointments.html"><i class="fas fa-calendar-alt"></i> My Appointments</a>
+                    </li>
+                    <li>
+                        <a href="patient-find-doctors.html"><i class="fas fa-user-md"></i> Find Doctors</a>
+                    </li>
+                    <li>
+                        <a href="patient-medical-history.html"><i class="fas fa-notes-medical"></i> Medical History</a>
+                    </li>
+                    <li>
+                        <a href="patient-profile.html"><i class="fas fa-user"></i> My Profile</a>
+                    </li>
+                    <li>
+                        <a href="patient-settings.html"><i class="fas fa-cog"></i> Settings</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="dashboard-main">
+            <div class="dashboard-welcome">
+                <h2>Welcome back, <span id="welcome-name">John</span>!</h2>
+                <p class="date-time" id="current-date">Tuesday, April 8, 2025</p>
+            </div>
+
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Upcoming Appointments</h3>
+                        <p class="stat-number" id="upcoming-appointments-count">2</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Past Appointments</h3>
+                        <p class="stat-number" id="past-appointments-count">5</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Doctors Visited</h3>
+                        <p class="stat-number" id="doctors-visited-count">3</p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="upcoming-appointments">
+                <div class="section-header">
+                    <h3>Upcoming Appointments</h3>
+                    <a href="patient-appointments.html" class="view-all-link">View All</a>
+                </div>
+                <div class="appointment-cards" id="upcoming-appointments-container">
+                    <!-- Appointment cards will be dynamically generated here -->
+                    <div class="appointment-card">
+                        <div class="appointment-date">
+                            <div class="month">APR</div>
+                            <div class="day">10</div>
+                            <div class="year">2025</div>
+                        </div>
+                        <div class="appointment-details">
+                            <h4>Dr. Sarah Smith</h4>
+                            <p class="specialization">Cardiologist</p>
+                            <p class="time"><i class="far fa-clock"></i> 10:00 AM - 10:30 AM</p>
+                            <p class="location"><i class="fas fa-map-marker-alt"></i> 123 Medical Center, Suite 456</p>
+                        </div>
+                        <div class="appointment-actions">
+                            <button class="btn btn-reschedule"><i class="fas fa-calendar-alt"></i> Reschedule</button>
+                            <button class="btn btn-cancel"><i class="fas fa-times"></i> Cancel</button>
+                        </div>
+                    </div>
+                    <div class="appointment-card">
+                        <div class="appointment-date">
+                            <div class="month">APR</div>
+                            <div class="day">15</div>
+                            <div class="year">2025</div>
+                        </div>
+                        <div class="appointment-details">
+                            <h4>Dr. Michael Johnson</h4>
+                            <p class="specialization">Dermatologist</p>
+                            <p class="time"><i class="far fa-clock"></i> 2:00 PM - 2:30 PM</p>
+                            <p class="location"><i class="fas fa-map-marker-alt"></i> 456 Health Plaza, Room 789</p>
+                        </div>
+                        <div class="appointment-actions">
+                            <button class="btn btn-reschedule"><i class="fas fa-calendar-alt"></i> Reschedule</button>
+                            <button class="btn btn-cancel"><i class="fas fa-times"></i> Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="recommended-doctors">
+                <div class="section-header">
+                    <h3>Recommended Doctors Near You</h3>
+                    <a href="patient-find-doctors.html" class="view-all-link">View All</a>
+                </div>
+                <div class="doctor-cards" id="recommended-doctors-container">
+                    <!-- Doctor cards will be dynamically generated here -->
+                    <div class="doctor-card">
+                        <div class="doctor-avatar">
+                            <img src="img/doctor-avatar-1.jpg" alt="Doctor Avatar">
+                        </div>
+                        <div class="doctor-info">
+                            <h4>Dr. Emily Williams</h4>
+                            <p class="specialization">Neurologist</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>4.5 (28 reviews)</span>
+                            </div>
+                            <p class="distance"><i class="fas fa-map-marker-alt"></i> 1.2 miles away</p>
+                            <p class="availability"><i class="far fa-calendar-check"></i> Available Today</p>
+                        </div>
+                        <div class="doctor-actions">
+                            <button class="btn btn-primary"><i class="fas fa-calendar-plus"></i> Book Appointment</button>
+                            <button class="btn btn-secondary"><i class="fas fa-user-md"></i> View Profile</button>
+                        </div>
+                    </div>
+                    <div class="doctor-card">
+                        <div class="doctor-avatar">
+                            <img src="img/doctor-avatar-2.jpg" alt="Doctor Avatar">
+                        </div>
+                        <div class="doctor-info">
+                            <h4>Dr. Robert Chen</h4>
+                            <p class="specialization">Orthopedic Surgeon</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span>4.0 (42 reviews)</span>
+                            </div>
+                            <p class="distance"><i class="fas fa-map-marker-alt"></i> 2.5 miles away</p>
+                            <p class="availability"><i class="far fa-calendar-check"></i> Available Tomorrow</p>
+                        </div>
+                        <div class="doctor-actions">
+                            <button class="btn btn-primary"><i class="fas fa-calendar-plus"></i> Book Appointment</button>
+                            <button class="btn btn-secondary"><i class="fas fa-user-md"></i> View Profile</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="health-map">
+                <div class="section-header">
+                    <h3>Healthcare Providers Near You</h3>
+                </div>
+                <div class="map-container" id="google-map">
+                    <!-- Google Maps will be loaded here -->
+                </div>
+                <div class="map-filters">
+                    <div class="filter-group">
+                        <label for="specialization-filter">Specialization:</label>
+                        <select id="specialization-filter">
+                            <option value="all">All Specializations</option>
+                            <option value="general">General Practitioner</option>
+                            <option value="cardiology">Cardiology</option>
+                            <option value="dermatology">Dermatology</option>
+                            <option value="neurology">Neurology</option>
+                            <option value="orthopedics">Orthopedics</option>
+                            <option value="pediatrics">Pediatrics</option>
+                            <option value="psychiatry">Psychiatry</option>
+                            <option value="gynecology">Gynecology</option>
+                            <option value="ophthalmology">Ophthalmology</option>
+                            <option value="ent">ENT</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="distance-filter">Distance:</label>
+                        <select id="distance-filter">
+                            <option value="5">Within 5 miles</option>
+                            <option value="10" selected>Within 10 miles</option>
+                            <option value="20">Within 20 miles</option>
+                            <option value="50">Within 50 miles</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="availability-filter">Availability:</label>
+                        <select id="availability-filter">
+                            <option value="any">Any Time</option>
+                            <option value="today">Today</option>
+                            <option value="tomorrow">Tomorrow</option>
+                            <option value="week">This Week</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" id="apply-filters">Apply Filters</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="dashboard-footer">
+        <p>&copy; 2025 MediConnect. All rights reserved.</p>
+    </footer>
+
+    <script src="js/patient-dashboard.js"></script>
+</body>
+</html>

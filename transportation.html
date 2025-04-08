@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transportation Options - MediConnect</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/notifications.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .transportation-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .transportation-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .transportation-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .transportation-option {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .transportation-option:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .transportation-option.selected {
+            border-color: var(--primary-color);
+            background-color: #e3f2fd;
+        }
+        
+        .transportation-option.selected::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .transportation-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: block;
+            text-align: center;
+        }
+        
+        .transportation-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .transportation-description {
+            color: var(--gray-dark);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        .transportation-details {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .transportation-details span {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .transportation-details .detail-label {
+            font-weight: 600;
+            color: var(--gray-dark);
+        }
+        
+        .transportation-form {
+            margin-top: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .map-container {
+            height: 300px;
+            margin-top: 2rem;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
+        }
+        
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .route-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .route-info p {
+            margin: 0.5rem 0;
+        }
+        
+        .route-info .route-time {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        @media screen and (max-width: 768px) {
+            .transportation-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .form-actions button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="logo">
+            <h1>MediConnect</h1>
+        </div>
+        <div class="user-info">
+            <span class="user-name" id="userName">John Doe</span>
+            <div class="user-avatar">
+                <img src="img/placeholders/avatar.jpg" alt="User Avatar" id="userAvatar">
+            </div>
+            <div class="dropdown">
+                <button class="dropdown-toggle">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item">Profile</a>
+                    <a href="#" class="dropdown-item">Settings</a>
+                    <a href="login.html" class="dropdown-item" id="logoutBtn">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <aside class="dashboard-sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="patient-dashboard.html">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="active">
+                            <i class="fas fa-car"></i>
+                            <span>Transportation</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Appointments</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-user-md"></i>
+                            <span>Doctors</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-file-medical"></i>
+                            <span>Medical Records</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="dashboard-main">
+            <div class="transportation-container">
+                <div class="transportation-header">
+                    <h1>Transportation Options</h1>
+                    <p>Select your preferred transportation method for your healthcare appointments</p>
+                </div>
+
+                <div class="transportation-options">
+                    <div class="transportation-option" data-type="walking">
+                        <i class="fas fa-walking transportation-icon"></i>
+                        <h3 class="transportation-name">Walking</h3>
+                        <p class="transportation-description">Ideal for appointments within walking distance. Environmentally friendly and provides health benefits.</p>
+                        <div class="transportation-details">
+                            <span><span class="detail-label">Max Distance:</span> Up to 2 miles</span>
+                            <span><span class="detail-label">Recommended for:</span> Nearby appointments</span>
+                        </div>
+                    </div>
+
+                    <div class="transportation-option" data-type="bicycle">
+                        <i class="fas fa-bicycle transportation-icon"></i>
+                        <h3 class="transportation-name">Bicycle</h3>
+                        <p class="transportation-description">Great for short to medium distances. Environmentally friendly and faster than walking.</p>
+                        <div class="transportation-details">
+                            <span><span class="detail-label">Max Distance:</span> Up to 5 miles</span>
+                            <span><span class="detail-label">Recommended for:</span> Local appointments</span>
+                        </div>
+                    </div>
+
+                    <div class="transportation-option" data-type="public">
+                        <i class="fas fa-bus transportation-icon"></i>
+                        <h3 class="transportation-name">Public Transportation</h3>
+                        <p class="transportation-description">Bus, subway, or train. Cost-effective and environmentally friendly option for longer distances.</p>
+                        <div class="transportation-details">
+                            <span><span class="detail-label">Max Distance:</span> Any distance with public transit</span>
+                            <span><span class="detail-label">Recommended for:</span> Urban areas with good transit</span>
+                        </div>
+                    </div>
+
+                    <div class="transportation-option" data-type="car">
+                        <i class="fas fa-car transportation-icon"></i>
+                        <h3 class="transportation-name">Personal Vehicle</h3>
+                        <p class="transportation-description">Your own car or motorcycle. Most flexible option with door-to-door convenience.</p>
+                        <div class="transportation-details">
+                            <span><span class="detail-label">Max Distance:</span> Any distance</span>
+                            <span><span class="detail-label">Recommended for:</span> Any location, especially those with limited public transit</span>
+                        </div>
+                    </div>
+
+                    <div class="transportation-option" data-type="rideshare">
+                        <i class="fas fa-taxi transportation-icon"></i>
+                        <h3 class="transportation-name">Rideshare / Taxi</h3>
+                        <p class="transportation-description">Uber, Lyft, or traditional taxi. Convenient when you don't have a vehicle or can't drive.</p>
+                        <div class="transportation-details">
+                            <span><span class="detail-label">Max Distance:</span> Any distance</span>
+                            <span><span class="detail-label">Recommended for:</span> When you need door-to-door service</span>
+                        </div>
+                    </div>
+
+                    <div class="transportation-option" data-type="medical">
+                        <i class="fas fa-ambulance transportation-icon"></i>
+                        <h3 class="transportation-name">Medical Transportation</h3>
+                        <p class="transportation-description">Non-emergency medical transportation services. Ideal for patients with mobility issues.</p>
+                        <div class="transportation-details">
+                            <span><span class="detail-label">Max Distance:</span> Any distance</span>
+                            <span><span class="detail-label">Recommended for:</span> Patients with special needs or mobility issues</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="transportation-form">
+                    <h2>Transportation Preferences</h2>
+                    <form id="transportationForm">
+                        <div class="form-group">
+                            <label for="primaryTransportation">Primary Transportation Method</label>
+                            <select id="primaryTransportation" name="primaryTransportation" required>
+                                <option value="">Select your primary transportation method</option>
+                                <option value="walking">Walking</option>
+                                <option value="bicycle">Bicycle</option>
+                                <option value="public">Public Transportation</option>
+                                <option value="car">Personal Vehicle</option>
+                                <option value="rideshare">Rideshare / Taxi</option>
+                                <option value="medical">Medical Transportation</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="secondaryTransportation">Secondary Transportation Method (Optional)</label>
+                            <select id="secondaryTransportation" name="secondaryTransportation">
+                                <option value="">Select your secondary transportation method</option>
+                                <option value="walking">Walking</option>
+                                <option value="bicycle">Bicycle</option>
+                                <option value="public">Public Transportation</option>
+                                <option value="car">Personal Vehicle</option>
+                                <option value="rideshare">Rideshare / Taxi</option>
+                                <option value="medical">Medical Transportation</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="maxDistance">Maximum Preferred Travel Distance (miles)</label>
+                            <input type="number" id="maxDistance" name="maxDistance" min="1" max="100" value="10">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="maxTravelTime">Maximum Preferred Travel Time (minutes)</label>
+                            <input type="number" id="maxTravelTime" name="maxTravelTime" min="5" max="180" value="30">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="specialNeeds">Special Transportation Needs (Optional)</label>
+                            <textarea id="specialNeeds" name="specialNeeds" rows="3" placeholder="Describe any special transportation needs or accommodations"></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="saveBtn">Save Preferences</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="map-container">
+                    <div id="map">
+                        <!-- Google Maps will be loaded here -->
+                        <img src="img/placeholders/map.jpg" alt="Map Placeholder" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                </div>
+
+                <div class="route-info">
+                    <h3>Sample Route Information</h3>
+                    <p><strong>From:</strong> Your Location</p>
+                    <p><strong>To:</strong> Sample Medical Center</p>
+                    <p><strong>Distance:</strong> 3.5 miles</p>
+                    <p class="route-time"><strong>Estimated Travel Time:</strong></p>
+                    <ul>
+                        <li>Walking: 70 minutes</li>
+                        <li>Bicycle: 21 minutes</li>
+                        <li>Public Transit: 25 minutes</li>
+                        <li>Car: 12 minutes</li>
+                        <li>Rideshare: 12 minutes</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/notifications.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get user data
+            const user = JSON.parse(localStorage.getItem('mediconnect_user') || '{}');
+            
+            // Update user name in header
+            if (user.name) {
+                document.getElementById('userName').textContent = user.name;
+            }
+            
+            // Check if user is logged in and is a patient
+            if (!user.id || user.type !== 'patient') {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Get transportation options
+            const transportationOptions = document.querySelectorAll('.transportation-option');
+            
+            // Add click event to transportation options
+            transportationOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    transportationOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                    
+                    // Update primary transportation select
+                    const transportationType = this.dataset.type;
+                    document.getElementById('primaryTransportation').value = transportationType;
+                    
+                    // Show notification
+                    showNotification(`${this.querySelector('.transportation-name').textContent} selected as your primary transportation method.`, 'info');
+                });
+            });
+            
+            // Load saved transportation preferences
+            const transportationPreferences = JSON.parse(localStorage.getItem('mediconnect_transportation_' + user.id) || '{}');
+            
+            if (transportationPreferences.primaryTransportation) {
+                document.getElementById('primaryTransportation').value = transportationPreferences.primaryTransportation;
+                
+                // Select the corresponding option
+                const selectedOption = document.querySelector(`.transportation-option[data-type="${transportationPreferences.primaryTransportation}"]`);
+                if (selectedOption) {
+                    selectedOption.classList.add('selected');
+                }
+                
+                // Set other form values
+                if (transportationPreferences.secondaryTransportation) {
+                    document.getElementById('secondaryTransportation').value = transportationPreferences.secondaryTransportation;
+                }
+                
+                if (transportationPreferences.maxDistance) {
+                    document.getElementById('maxDistance').value = transportationPreferences.maxDistance;
+                }
+                
+                if (transportationPreferences.maxTravelTime) {
+                    document.getElementById('maxTravelTime').value = transportationPreferences.maxTravelTime;
+                }
+                
+                if (transportationPreferences.specialNeeds) {
+                    document.getElementById('specialNeeds').value = transportationPreferences.specialNeeds;
+                }
+            }
+            
+            // Handle form submission
+            document.getElementById('transportationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const primaryTransportation = document.getElementById('primaryTransportation').value;
+                const secondaryTransportation = document.getElementById('secondaryTransportation').value;
+                const maxDistance = document.getElementById('maxDistance').value;
+                const maxTravelTime = document.getElementById('maxTravelTime').value;
+                const specialNeeds = document.getElementById('specialNeeds').value;
+                
+                // Validate form
+                if (!primaryTransportation) {
+                    showNotification('Please select a primary transportation method', 'error');
+                    return;
+                }
+                
+                // Save preferences to localStorage
+                const preferences = {
+                    primaryTransportation,
+                    secondaryTransportation,
+                    maxDistance,
+                    maxTravelTime,
+                    specialNeeds,
+                    lastUpdated: new Date().toISOString()
+                };
+                
+                localStorage.setItem('mediconnect_transportation_' + user.id, JSON.stringify(preferences));
+                
+                // Show success notification
+                showNotification('Transportation preferences saved successfully!', 'success');
+                
+                // Redirect to dashboard after a short delay
+                setTimeout(() => {
+                    window.location.href = 'patient-dashboard.html';
+                }, 2000);
+            });
+            
+            // Handle cancel button
+            document.getElementById('cancelBtn').addEventListener('click', function() {
+                window.location.href = 'patient-dashboard.html';
+            });
+            
+            // Handle logout
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('mediconnect_user');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+/* Notification System Styles */
+
+/* Notification Container */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 300px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+    background-color: white;
+    border-left: 4px solid #4a90e2;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+/* Notification Types */
+.notification-info {
+    border-left-color: #4a90e2;
+}
+
+.notification-success {
+    border-left-color: #5cb85c;
+}
+
+.notification-warning {
+    border-left-color: #f0ad4e;
+}
+
+.notification-error {
+    border-left-color: #d9534f;
+}
+
+/* Notification Content */
+.notification-content {
+    flex: 1;
+}
+
+.notification-content p {
+    margin: 0;
+    color: #333;
+}
+
+/* Notification Close Button */
+.notification-close {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #999;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
+}
+
+.notification-close:hover {
+    color: #333;
+}
+
+/* Auth Notification */
+.auth-notification {
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    display: none;
+    text-align: center;
+}
+
+.auth-notification.notification-info {
+    background-color: #e3f2fd;
+    color: #0d47a1;
+}
+
+.auth-notification.notification-success {
+    background-color: #e8f5e9;
+    color: #1b5e20;
+}
+
+.auth-notification.notification-warning {
+    background-color: #fff8e1;
+    color: #ff6f00;
+}
+
+.auth-notification.notification-error {
+    background-color: #ffebee;
+    color: #b71c1c;
+}
+
+/* Multiple Notifications */
+.notification + .notification {
+    margin-top: 10px;
+}
+
+/* Appointment Reminder Notification */
+.reminder-notification {
+    background-color: #e3f2fd;
+    border-left-color: #2196f3;
+}
+
+.reminder-notification .notification-content p {
+    color: #0d47a1;
+}
+
+/* Mobile Responsive */
+@media screen and (max-width: 576px) {
+    .notification {
+        width: calc(100% - 40px);
+        top: 10px;
+        right: 10px;
+    }
+}

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - MediConnect</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="dashboard-body">
+    <header class="dashboard-header">
+        <div class="logo">
+            <h1>MediConnect</h1>
+        </div>
+        <div class="user-menu">
+            <span id="user-name">Dr. Sarah Smith</span>
+            <div class="user-avatar">
+                <img src="img/doctor-avatar.jpg" alt="Doctor Avatar">
+                <div class="user-dropdown">
+                    <a href="doctor-profile.html"><i class="fas fa-user"></i> Profile</a>
+                    <a href="doctor-settings.html"><i class="fas fa-cog"></i> Settings</a>
+                    <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+            </div>
+            <div class="notifications">
+                <i class="fas fa-bell"></i>
+                <span class="notification-count">5</span>
+                <div class="notification-dropdown">
+                    <div class="notification-item">
+                        <p>New appointment request from John Doe</p>
+                        <span class="notification-time">10 minutes ago</span>
+                    </div>
+                    <div class="notification-item">
+                        <p>Patient Jane Smith canceled appointment</p>
+                        <span class="notification-time">1 hour ago</span>
+                    </div>
+                    <div class="notification-item">
+                        <p>Reminder: Update your availability for next week</p>
+                        <span class="notification-time">Yesterday</span>
+                    </div>
+                    <a href="doctor-notifications.html" class="view-all">View All Notifications</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active">
+                        <a href="doctor-dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="doctor-appointments.html"><i class="fas fa-calendar-alt"></i> Appointments</a>
+                    </li>
+                    <li>
+                        <a href="doctor-patients.html"><i class="fas fa-users"></i> My Patients</a>
+                    </li>
+                    <li>
+                        <a href="doctor-availability.html"><i class="fas fa-clock"></i> Availability</a>
+                    </li>
+                    <li>
+                        <a href="doctor-profile.html"><i class="fas fa-user-md"></i> My Profile</a>
+                    </li>
+                    <li>
+                        <a href="doctor-settings.html"><i class="fas fa-cog"></i> Settings</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="dashboard-main">
+            <div class="dashboard-welcome">
+                <h2>Welcome back, <span id="welcome-name">Dr. Smith</span>!</h2>
+                <p class="date-time" id="current-date">Tuesday, April 8, 2025</p>
+            </div>
+
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Today's Appointments</h3>
+                        <p class="stat-number" id="today-appointments-count">8</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>New Patients</h3>
+                        <p class="stat-number" id="new-patients-count">3</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-times"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Cancellations</h3>
+                        <p class="stat-number" id="cancellations-count">1</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Total Patients</h3>
+                        <p class="stat-number" id="total-patients-count">42</p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="appointment-requests">
+                <div class="section-header">
+                    <h3>Appointment Requests</h3>
+                    <a href="doctor-appointment-requests.html" class="view-all-link">View All</a>
+                </div>
+                <div class="request-cards" id="appointment-requests-container">
+                    <!-- Request cards will be dynamically generated here -->
+                    <div class="request-card">
+                        <div class="patient-info">
+                            <div class="patient-avatar">
+                                <img src="img/patient-avatar-1.jpg" alt="Patient Avatar">
+                            </div>
+                            <div class="patient-details">
+                                <h4>John Doe</h4>
+                                <p class="request-type">New Patient</p>
+                                <p class="request-reason">Reason: Annual checkup</p>
+                            </div>
+                        </div>
+                        <div class="request-time">
+                            <p class="date">April 10, 2025</p>
+                            <p class="time">10:00 AM - 10:30 AM</p>
+                        </div>
+                        <div class="request-actions">
+                            <button class="btn btn-accept"><i class="fas fa-check"></i> Accept</button>
+                            <button class="btn btn-reschedule"><i class="fas fa-calendar-alt"></i> Reschedule</button>
+                            <button class="btn btn-decline"><i class="fas fa-times"></i> Decline</button>
+                        </div>
+                    </div>
+                    <div class="request-card">
+                        <div class="patient-info">
+                            <div class="patient-avatar">
+                                <img src="img/patient-avatar-2.jpg" alt="Patient Avatar">
+                            </div>
+                            <div class="patient-details">
+                                <h4>Jane Smith</h4>
+                                <p class="request-type">Returning Patient</p>
+                                <p class="request-reason">Reason: Follow-up consultation</p>
+                            </div>
+                        </div>
+                        <div class="request-time">
+                            <p class="date">April 11, 2025</p>
+                            <p class="time">2:00 PM - 2:30 PM</p>
+                        </div>
+                        <div class="request-actions">
+                            <button class="btn btn-accept"><i class="fas fa-check"></i> Accept</button>
+                            <button class="btn btn-reschedule"><i class="fas fa-calendar-alt"></i> Reschedule</button>
+                            <button class="btn btn-decline"><i class="fas fa-times"></i> Decline</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="todays-schedule">
+                <div class="section-header">
+                    <h3>Today's Schedule</h3>
+                    <a href="doctor-appointments.html" class="view-all-link">View Full Schedule</a>
+                </div>
+                <div class="schedule-timeline" id="today-schedule-container">
+                    <!-- Timeline will be dynamically generated here -->
+                    <div class="timeline-header">
+                        <div class="time-slot">Time</div>
+                        <div class="patient-slot">Patient</div>
+                        <div class="reason-slot">Reason</div>
+                        <div class="status-slot">Status</div>
+                        <div class="actions-slot">Actions</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time-slot">9:00 AM - 9:30 AM</div>
+                        <div class="patient-slot">
+                            <div class="patient-avatar-small">
+                                <img src="img/patient-avatar-3.jpg" alt="Patient Avatar">
+                            </div>
+                            <div class="patient-name">Robert Johnson</div>
+                        </div>
+                        <div class="reason-slot">Blood pressure check</div>
+                        <div class="status-slot"><span class="status-completed">Completed</span></div>
+                        <div class="actions-slot">
+                            <button class="btn btn-sm btn-view-notes"><i class="fas fa-clipboard"></i> View Notes</button>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time-slot">10:00 AM - 10:30 AM</div>
+                        <div class="patient-slot">
+                            <div class="patient-avatar-small">
+                                <img src="img/patient-avatar-4.jpg" alt="Patient Avatar">
+                            </div>
+                            <div class="patient-name">Mary Williams</div>
+                        </div>
+                        <div class="reason-slot">Diabetes follow-up</div>
+                        <div class="status-slot"><span class="status-in-progress">In Progress</span></div>
+                        <div class="actions-slot">
+                            <button class="btn btn-sm btn-complete"><i class="fas fa-check"></i> Complete</button>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time-slot">11:00 AM - 11:30 AM</div>
+                        <div class="patient-slot">
+                            <div class="patient-avatar-small">
+                                <img src="img/patient-avatar-5.jpg" alt="Patient Avatar">
+                            </div>
+                            <div class="patient-name">David Brown</div>
+                        </div>
+                        <div class="reason-slot">Annual physical</div>
+                        <div class="status-slot"><span class="status-upcoming">Upcoming</span></div>
+                        <div class="actions-slot">
+                            <button class="btn btn-sm btn-start"><i class="fas fa-play"></i> Start</button>
+                            <button class="btn btn-sm btn-reschedule"><i class="fas fa-calendar-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time-slot">1:00 PM - 1:30 PM</div>
+                        <div class="patient-slot">
+                            <div class="patient-avatar-small">
+                                <img src="img/patient-avatar-6.jpg" alt="Patient Avatar">
+                            </div>
+                            <div class="patient-name">Jennifer Lee</div>
+                        </div>
+                        <div class="reason-slot">Medication review</div>
+                        <div class="status-slot"><span class="status-upcoming">Upcoming</span></div>
+                        <div class="actions-slot">
+                            <button class="btn btn-sm btn-start"><i class="fas fa-play"></i> Start</button>
+                            <button class="btn btn-sm btn-reschedule"><i class="fas fa-calendar-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="availability-management">
+                <div class="section-header">
+                    <h3>Availability Management</h3>
+                    <a href="doctor-availability.html" class="view-all-link">Manage Full Schedule</a>
+                </div>
+                <div class="availability-calendar" id="availability-calendar-container">
+                    <!-- Calendar will be dynamically generated here -->
+                    <div class="calendar-controls">
+                        <button class="btn btn-prev"><i class="fas fa-chevron-left"></i></button>
+                        <h4 class="current-month">April 2025</h4>
+                        <button class="btn btn-next"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-header">
+                            <div>Sun</div>
+                            <div>Mon</div>
+                            <div>Tue</div>
+                            <div>Wed</div>
+                            <div>Thu</div>
+                            <div>Fri</div>
+                            <div>Sat</div>
+                        </div>
+                        <div class="calendar-days">
+                            <!-- Calendar days will be dynamically generated here -->
+                            <!-- This is just a placeholder for the structure -->
+                            <div class="calendar-day prev-month">30</div>
+                            <div class="calendar-day prev-month">31</div>
+                            <div class="calendar-day">1</div>
+                            <div class="calendar-day">2</div>
+                            <div class="calendar-day">3</div>
+                            <div class="calendar-day">4</div>
+                            <div class="calendar-day">5</div>
+                            <div class="calendar-day">6</div>
+                            <div class="calendar-day">7</div>
+                            <div class="calendar-day current-day">8</div>
+                            <div class="calendar-day busy-day">9</div>
+                            <div class="calendar-day busy-day">10</div>
+                            <div class="calendar-day">11</div>
+                            <div class="calendar-day">12</div>
+                            <!-- ... more days ... -->
+                        </div>
+                    </div>
+                    <div class="quick-availability">
+                        <h4>Quick Availability Settings</h4>
+                        <div class="availability-actions">
+                            <button class="btn btn-block-day"><i class="fas fa-ban"></i> Block Day</button>
+                            <button class="btn btn-set-hours"><i class="fas fa-clock"></i> Set Hours</button>
+                            <button class="btn btn-vacation"><i class="fas fa-plane"></i> Set Vacation</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="dashboard-footer">
+        <p>&copy; 2025 MediConnect. All rights reserved.</p>
+    </footer>
+
+    <script src="js/doctor-dashboard.js"></script>
+</body>
+</html>
