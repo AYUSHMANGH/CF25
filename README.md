@@ -1,6 +1,6 @@
 # MediConnect - Healthcare Appointment Optimization
 
-MediConnect is a frontend-only web application designed to optimize healthcare appointments by matching patients with doctors based on location, transportation preferences, and medical specialization. This application is built using pure HTML, CSS, and JavaScript with browser storage (localStorage) to simulate a database.
+MediConnect is a frontend-only web application designed to optimize healthcare appointments by matching patients with doctors based on location, transportation preferences, and have medical specialization. This application is built using pure HTML, CSS, and JavaScript with browser storage (localStorage) to simulate a database.
 
 ## Features
 
